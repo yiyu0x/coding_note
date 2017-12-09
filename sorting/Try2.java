@@ -85,50 +85,50 @@ public class Try2 extends JPanel {
     public static void quickSort(int[] a,int low,int high){
 
         if(low<high){
-        	int temp=0;
-    		int pivot=a[low];                     
-   			int large_index=low+1;
-    		int small_index=high;
+            int temp=0;
+            int pivot=a[low];                     
+            int large_index=low+1;
+            int small_index=high;
 
-	    	while(large_index<small_index){
+            while(large_index<small_index){
 
-	     		while(a[large_index]<pivot){
-		        	if(large_index==high) 
-		            	break;
-		        	large_index++; 
-	   			} 
+                while(a[large_index]<pivot){
+                    if(large_index==high) 
+                        break;
+                    large_index++; 
+                } 
 
-	    		while(a[small_index]>pivot) {
-		     		if(small_index==low) 
-		     			break;
-		     		small_index--; 
-	   			}
+                while(a[small_index]>pivot) {
+                    if(small_index==low) 
+                        break;
+                    small_index--; 
+                }
 
-		   		if(large_index<small_index) {
-		     		temp = a[large_index];
-		     		a[large_index]= a[small_index];
-		     		a[small_index]= temp;
-		     		large_index++;
-		     		small_index--; 
-		    	}
-	  		}  
+                if(large_index<small_index) {
+                    temp = a[large_index];
+                    a[large_index]= a[small_index];
+                    a[small_index]= temp;
+                    large_index++;
+                    small_index--; 
+                }
+            }  
 
-		    if(a[small_index]<pivot) {                               
-		       temp = a[small_index];
-		       a[small_index]= a[low];
-		       a[low]= temp;
-		  	}
+            if(a[small_index]<pivot) {                               
+               temp = a[small_index];
+               a[small_index]= a[low];
+               a[low]= temp;
+            }
 
-		  	record(a);
-		    if(low<small_index){
-		    	quickSort(a,low,small_index-1);
-		    }
+            record(a);
+            if(low<small_index){
+                quickSort(a,low,small_index-1);
+            }
 
-		    if(high>small_index){
-		    	quickSort(a,small_index+1,high);
-		    }
-  		}
-   	}
+            if(high>small_index){
+                quickSort(a,small_index+1,high);
+            }
+        }
+    }
 
     
 
