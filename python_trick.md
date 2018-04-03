@@ -45,6 +45,21 @@ out: 0
 
 ## pythonic
 
+### 讀取多個使用者輸入
+
+```python
+#input three int , seperate by space
+a,b,c = map(int,input().split())
+
+#input three int , seperate by ','
+a,b,c = map(int,input().split(','))
+
+#input three string , seperate by space
+a,b,c = input().split(',')
+
+#input any number int , seperate by space
+input = list(map(int,input().split(',')))
+```
 ### 找出字串中出現最多的字元
 
 ```python
