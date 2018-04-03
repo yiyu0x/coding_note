@@ -33,15 +33,15 @@ round函數有先天漏洞，四捨五入實際上是取接近偶數的整數
 
 > round(4.5)
 
-結果是 4
+out: 4
 
 > round(3.5)
 
-結果是 4
+out: 4
 
 > round(0.5)
 
-結果是0
+out: 0
 
 ## pythonic
 
