@@ -12,3 +12,5 @@
 
 
 ^= 0x20 can use to `uppwe case to lower case`
+
+` ^= 0x20 can use to upper case to lower case and also lower case to upper case`
