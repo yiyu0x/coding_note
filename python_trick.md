@@ -1,6 +1,16 @@
 
 # 你所不知道的python(?
 
+## print
+
+print函數後面可以接key，常用的有sep跟end
+
+預設的print函數
+
+> `print('hello',sep=' ',end='\n')`
+
+所以print函數在印出東西時會自動將每一個物件中間空格，並且換行
+
 ## round
 
 round函數有先天漏洞，四捨五入實際上是取接近偶數的整數
