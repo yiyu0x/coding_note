@@ -45,7 +45,7 @@ out: 0
 
 ## pythonic
 
-### 讀取多個使用者輸入
+### 讀取多個使用者輸入值
 
 ```python
 #input three int , seperate by space
@@ -58,7 +58,7 @@ a,b,c = map(int,input().split(','))
 a,b,c = input().split(',')
 
 #input any number int , seperate by space
-input = list(map(int,input().split(',')))
+data = list(map(int,input().split(',')))
 ```
 ### 找出字串中出現最多的字元
 
