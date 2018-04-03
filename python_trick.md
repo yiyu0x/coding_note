@@ -1,6 +1,7 @@
 
 # 你所不知道的python(?
 
+
 ## print
 
 print函數後面可以接key，常用的有sep跟end
@@ -10,6 +11,19 @@ print函數後面可以接key，常用的有sep跟end
 > `print('hello',sep=' ',end='\n')`
 
 所以print函數在印出東西時會自動將每一個物件中間空格，並且換行
+
+- - -
+
+還有一個技巧是有時候print的東西很多的時候，coding時可以簡單排版
+
+只要要一行都有用引號即可，印出時會是連續的字串
+
+```python
+ print("hello,"
+       "python is pretty")
+```
+
+out:`hello,python is pretty`
 
 ## round
 
