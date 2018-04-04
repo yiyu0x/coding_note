@@ -95,6 +95,6 @@ for i in range(2,100):
         print(i,end=' ')
 ```
 
-for結束在indent接上else，在for裡面執行完會接著執行else，亦可以與break搭配使用。
+for結束在相同indent接上else，在for裡面執行完會接著執行else，亦可以與break搭配使用。
 
 讓迴圈中沒有達成特定情況時直接執行else block，非常直覺。
