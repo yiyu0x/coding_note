@@ -1,5 +1,9 @@
-
-
+'''
+106/4/17
+1050305APCSImplementation.pdf
+question 2
+author: yiyu0x
+'''
 R,C,M = map(int,(input().split()))
 
 matrix = []
