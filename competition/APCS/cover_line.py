@@ -1,3 +1,9 @@
+'''
+106/4/24
+1050305APCSImplementation.pdf
+question 3
+author: yiyu0x
+'''
 import itertools
 times = int(input())
 space = [0 for n in range(0,1000)]
