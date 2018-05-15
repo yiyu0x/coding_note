@@ -127,7 +127,7 @@ class Board{
 			line++;
 		}
 		// System.out.println("Line: "+line);
-		if(line>=12){
+		if(line>=5){
 			return true;
 		}
 		return false;
