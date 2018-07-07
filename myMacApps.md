@@ -13,7 +13,7 @@
   
 ### 監測硬碟
   - Daisy : 硬碟容量偵測，掃描肥大檔案
-  - blackmagic disk speed test : 知名印碟測速軟體
+  - blackmagic disk speed test : 知名硬碟測速軟體
 
 ### 生產力
   - Alfred3 : 快速搜尋整台電腦，可以取代內建spotlight
