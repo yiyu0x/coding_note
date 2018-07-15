@@ -1,4 +1,4 @@
-function Queue() {
+function Quene() {
 
 	let head = null;
 	let length = 0;
@@ -10,7 +10,7 @@ function Queue() {
 
 	this.isEmpty = function () {
 		if ( head==null ) {
-			console.log('Queue is empty.')
+			console.log('Stack is empty.')
 			return true;
 		} else {
 			return false;
@@ -37,16 +37,8 @@ function Queue() {
 	this.pop = function () {
 		
 		if ( !this.isEmpty() ) {
-			let current = head;
-			let counter = 0;
-			while ( current ) {
-				counter++;
-				if ( counter == length-1) {
-					current.next = null;
-					length--;
-				}
-				current = current.next;
-			}
+			head = head.next;
+			length--;
 		}
 
 	}
@@ -63,7 +55,7 @@ function Queue() {
 	}
 }
 
-var q = new Queue();
+var q = new Quene();
 q.push(1)
 q.push(2)
 q.push(3)
