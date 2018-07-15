@@ -10,7 +10,7 @@ function Stack() {
 
 	this.isEmpty = function () {
 		if ( head==null ) {
-			console.log('Queue is empty.')
+			console.log('Stack is empty.')
 			return true;
 		} else {
 			return false;
