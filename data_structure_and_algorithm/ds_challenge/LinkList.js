@@ -67,11 +67,12 @@ function LinkList () {
 		}
 	}
 }
-//testing
-var ll = new LinkList();
-ll.append(1)
-ll.append(2)
-ll.append(3)
-ll.delete(3)
-ll.delete(2)
-ll.print()
+
+// testing
+// var ll = new LinkList();
+// ll.append(1)
+// ll.append(2)
+// ll.append(3)
+// ll.delete(3)
+// ll.delete(2)
+// ll.print()

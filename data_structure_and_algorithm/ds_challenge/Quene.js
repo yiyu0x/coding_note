@@ -1,27 +1,73 @@
 function Queue() {
 
-	let queue = [];
+	let head = null;
+	let length = 0;
+
+	const Node = function (value) {
+		this.value = value;
+		this.next;
+	}
+
+	this.isEmpty = function () {
+		if ( head==null ) {
+			console.log('Queue is empty.')
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 	this.push = function (value) {
-		queue.push(value);
+		const node = new Node(value);
+		let current;
+
+		if ( head==null ) {
+			head = node;
+			length = 1;
+		} else {
+			current = head;
+			while ( current.next ) {
+				current = current.next;
+			}
+			current.next = node;
+			length++;
+		}
 	}
 
 	this.pop = function () {
-		if ( queue.length==0 ) {
-			console.log('Queue is Empty. Can\'t pop.');
-			return;
+		
+		if ( !this.isEmpty() ) {
+			let current = head;
+			let counter = 0;
+			while ( current ) {
+				counter++;
+				if ( counter == length-1) {
+					current.next = null;
+					length--;
+				}
+				current = current.next;
+			}
 		}
-		queue.shift();
+
 	}
 
 	this.print = function () {
-		return queue;
+		if ( !this.isEmpty() ) {
+			let current = head;
+			while ( current ) {
+				console.log( current.value );
+				current = current.next;
+			}
+			console.log('length is : ',length);
+		}
 	}
 }
 
 var q = new Queue();
 q.push(1)
 q.push(2)
+q.push(3)
 q.pop()
-q.push(2)
-console.log(q.print())
+q.pop()
+q.push(3)
+q.print()
