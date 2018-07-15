@@ -1,4 +1,4 @@
-function Quene() {
+function Queue() {
 
 	let head = null;
 	let length = 0;
@@ -10,7 +10,7 @@ function Quene() {
 
 	this.isEmpty = function () {
 		if ( head==null ) {
-			console.log('Stack is empty.')
+			console.log('Queue is empty.')
 			return true;
 		} else {
 			return false;
