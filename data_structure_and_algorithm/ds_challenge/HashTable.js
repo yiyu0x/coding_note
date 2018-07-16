@@ -2,7 +2,8 @@ function HashTable () {
 	let hashtable = [];
 	const Node = function (value) {
 		this.value = value;
-		this.next = null;
+		this.left = null;
+		this.right = null;
 	}
 
 	this.getKey = function (value) {
@@ -64,8 +65,11 @@ function HashTable () {
 				console.log()
 			}
 		}
+
 	}
+ 
 }
+
 
 var h = new HashTable();
 h.add('hello')
@@ -78,3 +82,4 @@ h.delete('hlleo')
 h.delete('olleh')
 h.delete('hello')
 h.print()
+
