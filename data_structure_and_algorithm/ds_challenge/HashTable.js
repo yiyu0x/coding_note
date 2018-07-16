@@ -1,99 +1,41 @@
-function LinkList () {
-
+function BinarySearchTree () {
+	
 	let head = null;
 	const Node = function (value) {
 		this.value = value;
-		this.next = null;
+		this.left = null;
+		this.right = null;
 	}
 
-	this.append = function (value) {
+	this.add = function (value,current=head) {
 		let node = new Node(value);
-		if ( head==null) {
+		if ( !head ) {
 			head = node;
 		} else {
-			
-			let current = head;
-			while ( current ) {
-				if ( current.next == null ) {
-					current.next = node;
+
+			if ( !current.left ) current.left = node;
+			else if ( !current.right ) current.right = node;
+			else {
+				let left = current.left;
+				let right = current.right;
+				if ( !left.left || !left.right ) {
+					this.add(value,left);
+				} else {
+					this.add(value,right);
 				}
-				current = current.next;
 			}
 		}
 	}
 
-	this.delete = function (value) {
-		if ( head.value = value ) {
-			head = head.next;
-		} else {
-			let current = head;
-			while ( current ) {
-				if ( current.next.value == value) {
-					current.next = current.next.next;
-				}
-				current = current.next;
-			}
-		}
-	}
+	this.traversal = function () {
 
-	this.print = function () {
-		if ( head!= null) {
-			let current = head;
-			while ( current ) {
-				console.log(current.value);
-				current = current.next;
-			}
-		}
 	}
+ 
 }
-
-function HashTable () {
-
-	let hashTable = []
-	this.hashKey = function (value) {
-		let hash = 0;
-		for ( let i=0;i<value.length;i++ ) {
-			hash += value.charCodeAt(i);
-		}
-
-		return hash%10;
-	}
-
-	this.append = function (value) {
-		let key = this.hashKey(value);
-		if ( hashTable[key]==null ) {
-			hashTable[key] = new LinkList();
-		}
-
-		hashTable[key].append(value);
-	}
-
-	this.delete = function (value) {
-		let key = this.hashKey(value);
-		if ( hashTable[key]==null ) {
-			console.log('value not in hashtable. Can\'t delete');
-			return;
-		}
-
-		hashTable[key].delete(value);
-	}
-
-
-	this.print = function () {
-		for (let i=0;i<hashTable.length;i++ ) {
-			if ( hashTable[i]!=null ) {
-				console.log('key: ',i);		
-				hashTable[i].print();	
-			}
-		}
-	}
+var b = new completeBinaryTree();
+for (let i=0;i<5;i++) {
+	// let ran = Math.floor( Math.random()*50 + 1 );
+	let ran = i;
+	b.add(ran);
 }
-
-var h = new HashTable()
-h.append('hello')
-h.append('world')
-h.append('javascript')
-h.delete('hello')
-h.append('javascript')
-h.delete('javascript')
-h.print()
+b.traversal()
