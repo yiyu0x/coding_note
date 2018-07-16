@@ -1,21 +1,29 @@
-function LinkList () {
-
-	let head = null;
+function HashTable () {
+	let hashtable = [];
 	const Node = function (value) {
 		this.value = value;
 		this.next = null;
 	}
 
-	this.append = function (value) {
-		let node = new Node(value);
-		if ( head==null) {
-			head = node;
+	this.getKey = function (value) {
+		let key = 0;
+		for (let i=0;i<value.length;i++) {
+			key += value.charCodeAt(i);
+		}
+		return key%30;
+	}
+
+	this.add = function (value) {
+		let key = this.getKey(value);
+		if ( !hashtable[key] ) {
+			hashtable[key] = new Node(value);
+			// console.log(hashtable[key])
 		} else {
-			
-			let current = head;
+			let current = hashtable[key];
 			while ( current ) {
-				if ( current.next == null ) {
-					current.next = node;
+				if ( !current.next ) {
+					current.next = new Node(value);
+					return;
 				}
 				current = current.next;
 			}
@@ -23,13 +31,22 @@ function LinkList () {
 	}
 
 	this.delete = function (value) {
-		if ( head.value = value ) {
-			head = head.next;
-		} else {
-			let current = head;
-			while ( current ) {
-				if ( current.next.value == value) {
-					current.next = current.next.next;
+		let key = this.getKey(value);
+		if ( hashtable[key] ) {
+			let current = hashtable[key];
+			if ( current.value==value ) {
+				hashtable[key] = current.next;
+				return;
+			}
+			while ( current.next ) {
+				if ( current.next.value==value ) {
+					if ( current.next.next ) {
+						current.next = current.next.next;
+						return;
+					} else {
+						current.next = null;
+						return;
+					}
 				}
 				current = current.next;
 			}
@@ -37,63 +54,27 @@ function LinkList () {
 	}
 
 	this.print = function () {
-		if ( head!= null) {
-			let current = head;
-			while ( current ) {
-				console.log(current.value);
-				current = current.next;
+		for (let i=0;i<30;i++) {
+			if ( hashtable[i]) {
+				let current = hashtable[i];
+				while ( current ) {
+					console.log(current.value);
+					current = current.next;
+				}
+				console.log()
 			}
 		}
 	}
 }
 
-function HashTable () {
+var h = new HashTable();
+h.add('hello')
+h.add('olleh')
+h.add('hlleo')
 
-	let hashTable = []
-	this.hashKey = function (value) {
-		let hash = 0;
-		for ( let i=0;i<value.length;i++ ) {
-			hash += value.charCodeAt(i);
-		}
-
-		return hash%10;
-	}
-
-	this.append = function (value) {
-		let key = this.hashKey(value);
-		if ( hashTable[key]==null ) {
-			hashTable[key] = new LinkList();
-		}
-
-		hashTable[key].append(value);
-	}
-
-	this.delete = function (value) {
-		let key = this.hashKey(value);
-		if ( hashTable[key]==null ) {
-			console.log('value not in hashtable. Can\'t delete');
-			return;
-		}
-
-		hashTable[key].delete(value);
-	}
-
-
-	this.print = function () {
-		for (let i=0;i<hashTable.length;i++ ) {
-			if ( hashTable[i]!=null ) {
-				console.log('key: ',i);		
-				hashTable[i].print();	
-			}
-		}
-	}
-}
-
-var h = new HashTable()
-h.append('hello')
-h.append('world')
-h.append('javascript')
+h.add('js')
+h.add('php')
+h.delete('hlleo')
+h.delete('olleh')
 h.delete('hello')
-h.append('javascript')
-h.delete('javascript')
 h.print()
