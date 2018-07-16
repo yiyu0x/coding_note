@@ -62,7 +62,7 @@
   - GitHub Desktop
   
 ### 資料庫
-  - DB Browser fro SQLite : sqlite瀏覽器
+  - DB Browser for SQLite : sqlite瀏覽器
 
 ### 虛擬化
   - Docker
