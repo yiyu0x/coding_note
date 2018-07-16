@@ -1,4 +1,4 @@
-function BinaryTree () {
+function completeBinaryTree () {
 	
 	let head = null;
 	const Node = function (value) {
@@ -36,7 +36,7 @@ function BinaryTree () {
 	}
  
 }
-var b = new BinaryTree();
+var b = new completeBinaryTree();
 for (let i=0;i<5;i++) {
 	// let ran = Math.floor( Math.random()*50 + 1 );
 	let ran = i;
