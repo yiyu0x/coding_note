@@ -8,27 +8,29 @@ function AVLtree () {
 	}
 	
 	this.balanceTree = function () {
-		let case = 0;
+		let flag;
 		// case table
 		// LL :1
 		// LR :2
 		// RR :3
 		// RL :4
 		let target = this.findNodeNeedToBalance();
-		if ( this.bf( target ) > 1 ) {
-			if ( this.bf( target.left ) > 0 ) case = 1;
-			else if ( this.bf( target.left ) < 0 ) case = 2;
-		} else if ( this.bf( target ) < -1 ) {
-			if ( this.bf( target.right ) < 0 ) case = 3;
-			else if ( this.bf( target.right ) > 0 ) case = 4;
+		// console.log('tv',target.value)
+		if ( this.balanceFactor( target ) > 1 ) {
+			if ( this.balanceFactor( target.left ) > 0 ) flag = 1;
+			else if ( this.balanceFactor( target.left ) < 0 ) flag = 2;
+		} else if ( this.balanceFactor( target ) < -1 ) {
+			if ( this.balanceFactor( target.right ) < 0 ) flag = 3;
+			else if ( this.balanceFactor( target.right ) > 0 ) flag = 4;
 		}
 
-		console.log( case );
+		console.log( flag );
 
 	}
 
 	this.findNodeNeedToBalance = function (current=this.head,parent=this.head) {
 		console.log('debug---> bf',this.balanceFactor(current))
+		// console.log('debug--->',current.value)
 		while ( current ) {
 			if ( this.balanceFactor(current) < -1 || 
 				 this.balanceFactor(current) > 1 ) {
@@ -224,12 +226,14 @@ function AVLtree () {
 var b = new AVLtree();
 // for (let i=0;i<25;i++) {
 	// let ran = Math.floor( Math.random()*50 + 1 );
-	b.add(25);
+	b.add(24);
 	b.add(27);
 	b.add(20);
-	b.add(26);
-	b.add(50);
-	b.add(55);
+	b.add(1);
+	b.add(2);
+	// b.add(26);
+	// b.add(50);
+	// b.add(25);
 	// b.add(ran);
 	// b.delete(25)
 
