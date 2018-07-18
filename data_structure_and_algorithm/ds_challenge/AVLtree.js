@@ -8,6 +8,22 @@ function AVLtree () {
 	}
 	
 	this.balanceTree = function () {
+		let case = 0;
+		// case table
+		// LL :1
+		// LR :2
+		// RR :3
+		// RL :4
+		let target = this.findNodeNeedToBalance();
+		if ( this.bf( target ) > 1 ) {
+			if ( this.bf( target.left ) > 0 ) case = 1;
+			else if ( this.bf( target.left ) < 0 ) case = 2;
+		} else if ( this.bf( target ) < -1 ) {
+			if ( this.bf( target.right ) < 0 ) case = 3;
+			else if ( this.bf( target.right ) > 0 ) case = 4;
+		}
+
+		console.log( case );
 
 	}
 
@@ -218,12 +234,9 @@ var b = new AVLtree();
 	// b.delete(25)
 
 // }
-// b.add(20)
 // b.traversal_inorder()
 // console.log(b.balanceFactor(b.find(20).current))
-// b.height(b.head.left)
-// b.height(b.head.right)
-// console.log(b.head.value)
 // console.log(b)
-console.log(b.findNodeNeedToBalance().value)
+// console.log(b.findNodeNeedToBalance().value)
 // console.log(b.height(b.find(26).current))
+b.balanceTree()
