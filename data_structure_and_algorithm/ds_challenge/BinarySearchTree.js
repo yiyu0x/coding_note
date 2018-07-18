@@ -31,6 +31,22 @@ function BinarySearchTree () {
 		}
 	}
 
+	this.find = function (value ,current=head) {
+
+		while ( current ) {
+			
+			if ( current.value==value ) {
+				return true;
+			}
+
+			if ( value>current.value ) {
+				return this.find( value,current.right );
+			} else {
+				return this.find( value,current.left );
+			}
+		}
+		return false
+	}
 	this.traversal_inorder = function (current=head) {
 		if ( current ) {
 			this.traversal_inorder(current.left)
@@ -61,4 +77,5 @@ for (let i=0;i<25;i++) {
 	let ran = Math.floor( Math.random()*50 + 1 );
 	b.add(ran);
 }
+
 b.traversal_inorder()
