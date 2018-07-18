@@ -7,17 +7,24 @@ function AVLtree () {
 		this.right = null;
 	}
 	//do the AVL
-	this.balanceTree = function (current=this.head) {
+	this.balanceTree = function (current=this.head,parent=this.head) {
 		console.log('bf',this.balanceFactor(current))
 		while ( current ) {
 			if ( this.balanceFactor(current) < -1 || 
 				 this.balanceFactor(current) > 1 ) {
-				console.log('need to balance');
-			} else {
-				console.log('dont need to balance');
+				
+				//if bf greater then 1 , left tree is deeper than right tree
+				//so must adjust left tree
+				if ( this.balanceFactor(current) > 1 ) {
+					current = current.left;
+				} else if ( this.balanceFactor(current) < -1 ) {
+					current = current.right;
+				}
+				parent = current;
 			}
-			return
 		}
+
+		return parent;
 	}
 
 	this.balanceFactor = function (current) {
