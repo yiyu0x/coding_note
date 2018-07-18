@@ -6,25 +6,31 @@ function AVLtree () {
 		this.left = null;
 		this.right = null;
 	}
-	//do the AVL
-	this.balanceTree = function (current=this.head,parent=this.head) {
-		console.log('bf',this.balanceFactor(current))
+	
+	this.balanceTree = function () {
+
+	}
+
+	this.findNodeNeedToBalance = function (current=this.head,parent=this.head) {
+		console.log('debug---> bf',this.balanceFactor(current))
 		while ( current ) {
 			if ( this.balanceFactor(current) < -1 || 
 				 this.balanceFactor(current) > 1 ) {
-				
 				//if bf greater then 1 , left tree is deeper than right tree
 				//so must adjust left tree
 				if ( this.balanceFactor(current) > 1 ) {
+					parent = current;
 					current = current.left;
 				} else if ( this.balanceFactor(current) < -1 ) {
+					parent = current;
 					current = current.right;
 				}
-				parent = current;
+			} else {
+				return parent;
 			}
 		}
 
-		return parent;
+		// return parent;
 	}
 
 	this.balanceFactor = function (current) {
@@ -206,14 +212,8 @@ var b = new AVLtree();
 	b.add(27);
 	b.add(20);
 	b.add(26);
-	b.add(15);
-	b.add(23);
-	b.add(3);
-	b.add(1);
-	// b.add(ran);
-	// b.add(ran);
-	// b.add(ran);
-	// b.add(ran);
+	b.add(50);
+	b.add(55);
 	// b.add(ran);
 	// b.delete(25)
 
@@ -225,5 +225,5 @@ var b = new AVLtree();
 // b.height(b.head.right)
 // console.log(b.head.value)
 // console.log(b)
-b.balanceTree()
+console.log(b.findNodeNeedToBalance().value)
 // console.log(b.height(b.find(26).current))
