@@ -1,16 +1,50 @@
 function AVLtree () {
 	
-	let head = null;
+	this.head = null;
 	const Node = function (value) {
 		this.value = value;
 		this.left = null;
 		this.right = null;
 	}
+	//do the AVL
+	this.balanceTree = function (current=this.head) {
+		console.log('bf',this.balanceFactor(current))
+		while ( current ) {
+			if ( this.balanceFactor(current) < -1 || 
+				 this.balanceFactor(current) > 1 ) {
+				console.log('need to balance');
+			} else {
+				console.log('dont need to balance');
+			}
+			return
+		}
+	}
 
-	this.add = function (value,current=head) {
+	this.balanceFactor = function (current) {
+		if ( current ) {
+			let bf = this.height(current.left) - this.height(current.right)
+			return bf;
+		}
+	}
+
+	this.height = function (current) {
+		if ( current ) {
+			if ( !current.left && !current.right ) {
+            	return 1;
+            } else {
+            	return 1 + ( this.height(current.left) > this.height(current.right) ? 
+            				this.height(current.left) : this.height(current.right));
+            }
+		}
+
+		return 0;
+	}
+
+
+	this.add = function (value,current=this.head) {
 		let node = new Node(value);
-		if ( !head ) {
-			head = node;
+		if ( !this.head ) {
+			this.head = node;
 		} else {
 			let left = current.left;
 			let right = current.right;
@@ -31,7 +65,7 @@ function AVLtree () {
 		}
 	}
 
-	this.find = function (value ,current=head, parent=null) {
+	this.find = function (value ,current=this.head, parent=null) {
 
 		while ( current ) {
 			
@@ -48,7 +82,7 @@ function AVLtree () {
 		return false
 	}
 
-	this.deleteHead = function () {
+	this.deleteHead = function (head=this.head) {
 
 		if ( !head.left && !head.right ) {
 			head = null;
@@ -68,6 +102,7 @@ function AVLtree () {
 
 	}
 
+	// after delete leaf , adjust tree
 	this.adjust = function (target, current, current_parent) {
 		//find max on leaf || min on right
 		if ( !current.right ) {
@@ -82,7 +117,7 @@ function AVLtree () {
 
 		if ( this.find(value) ) {
 
-			if ( value==head.value ) {
+			if ( value==this.head.value ) {
 				this.deleteHead();
 				return
 			}
@@ -130,7 +165,7 @@ function AVLtree () {
 		}
 
 	}
-	this.traversal_inorder = function (current=head) {
+	this.traversal_inorder = function (current=this.head) {
 		if ( current ) {
 			this.traversal_inorder(current.left)
 			console.log(current.value);
@@ -138,7 +173,7 @@ function AVLtree () {
 		} 
 	}
 
-	this.traversal_preorder = function (current=head) {
+	this.traversal_preorder = function (current=this.head) {
 		if ( current ) {
 			console.log(current.value);
 			this.traversal_inorder(current.left)
@@ -146,7 +181,7 @@ function AVLtree () {
 		} 
 	}
 
-	this.traversal_postorder = function (current=head) {
+	this.traversal_postorder = function (current=this.head) {
 		if ( current ) {
 			this.traversal_inorder(current.left)
 			this.traversal_inorder(current.right)
@@ -154,25 +189,7 @@ function AVLtree () {
 		} 
 	}
 
-	this.height = function (current) {
-		if ( current ) {
-			if ( !current.left && !current.right ) {
-            	return 1;
-            } else {
-            	return 1 + ( this.height(current.left) > this.height(current.right) ? 
-            					this.height(current.left) : this.height(current.right));
-            }
-		}
 
-		return 0;
-	}
-
-	this.balanceFactor = function (current) {
-		if ( current ) {
-			let bf = this.height(current.left) - this.height(current.right)
-			return bf;
-		}
-	}
  
 }
 var b = new AVLtree();
@@ -182,8 +199,10 @@ var b = new AVLtree();
 	b.add(27);
 	b.add(20);
 	b.add(26);
-	// b.add(15);
+	b.add(15);
 	b.add(23);
+	b.add(3);
+	b.add(1);
 	// b.add(ran);
 	// b.add(ran);
 	// b.add(ran);
@@ -193,6 +212,11 @@ var b = new AVLtree();
 
 // }
 // b.add(20)
-b.traversal_inorder()
-console.log(b.balanceFactor(b.find(20).current))
+// b.traversal_inorder()
+// console.log(b.balanceFactor(b.find(20).current))
+// b.height(b.head.left)
+// b.height(b.head.right)
+// console.log(b.head.value)
+// console.log(b)
+b.balanceTree()
 // console.log(b.height(b.find(26).current))
