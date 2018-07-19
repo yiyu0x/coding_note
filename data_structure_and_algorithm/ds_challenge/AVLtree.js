@@ -57,7 +57,22 @@ function AVLtree () {
 			}
 		}
 	}
-	this.RR = function ( pivot) {
+	this.LR = function (pivot) {
+		let pivot_next = pivot.left;
+		let tmp = pivot_next.right;
+
+		pivot.left = tmp.right;
+		pivot_next.right = tmp.left;
+		tmp.left = pivot_next;
+		tmp.right = pivot;
+		// console.log('tmp',tmp.value)
+		if ( pivot==this.head ) {
+			this.head = tmp;
+		} else {
+			this.find(pivot.value).parent.left = tmp;
+		}		
+	}
+	this.RR = function (pivot) {
 		//siple type
 		if ( !pivot.left ) {
 			let tmp = new Node(pivot.value);
@@ -116,6 +131,7 @@ function AVLtree () {
 				this.LL(node);
 				break;
 			case 2:
+				this.LR(node);
 				break;
 			//RR
 			case 3:
@@ -254,8 +270,7 @@ function AVLtree () {
 
 			let target = this.find(value).current;
 			let parent = this.find(value).parent;
-			// console.log(parent.value)
-			// console.log(target.value)
+
 			let leafOnRight = (target.value>parent.value)?true:false;
 			//not have any leaf
 
@@ -332,9 +347,12 @@ var b = new AVLtree();
 	// b.add(30);
 	// b.add(45);
 	// b.add(20);
-	b.add(3);
+	// b.add(70);
+	b.add(20);
+	b.add(4);
+	b.add(26);
 	b.add(2);
-	b.add(1);
+	b.add(3);
 
 // }
 // b.traversal_inorder()
@@ -342,7 +360,7 @@ var b = new AVLtree();
 // console.log(b)
 // console.log(b.findNodeNeedToBalance().value)
 // console.log(b.height(b.find(26).current))
-b.traversal_inorder()
+// b.traversal_inorder()
 // console.log(b.findParent(b.find(40).current))
 // console.log(b.find(40).parent)
 console.log(b.head)
