@@ -6,6 +6,10 @@ function AVLtree () {
 		this.left = null;
 		this.right = null;
 	}
+	this.onParentRight = function (pivot) {
+		return (this.find(pivot.value).parent.right == pivot)?true:false;
+	}
+
 	this.findParent = function (node,current=this.head) {
 		while ( current ) {
 			if ( current.left==node || current.right==node ) {
@@ -36,7 +40,11 @@ function AVLtree () {
 				this.head = pivot_next;
 				pivot_next.right = tmp;
 			} else {
-				this.find(pivot.value).parent.left = pivot_next;
+				if ( this.onParentRight(pivot) ) {
+					this.find(pivot.value).parent.right = pivot_next;
+				} else {
+					this.find(pivot.value).parent.left = pivot_next;
+				}
 				pivot_next.right = tmp;
 			}
 
@@ -53,6 +61,11 @@ function AVLtree () {
 			if ( pivot==this.head ) {
 				this.head = pivot_next;
 			} else {
+				if ( this.onParentRight(pivot) ) {
+					this.find(pivot.value).parent.right = pivot_next;
+				} else {
+					this.find(pivot.value).parent.left = pivot_next;
+				}
 				this.find(pivot.value).parent.right = pivot_next;
 			}
 		}
@@ -69,7 +82,11 @@ function AVLtree () {
 		if ( pivot==this.head ) {
 			this.head = tmp;
 		} else {
-			this.find(pivot.value).parent.left = tmp;
+			if ( this.onParentRight(pivot) ) {
+				this.find(pivot.value).parent.right = tmp;
+			} else {
+				this.find(pivot.value).parent.left = tmp;
+			}
 		}		
 	}
 	this.RR = function (pivot) {
@@ -83,7 +100,11 @@ function AVLtree () {
 				this.head = pivot_next;
 				pivot_next.left = tmp;
 			} else {
-				this.find(pivot.value).parent.right = pivot_next;
+				if ( this.onParentRight(pivot) ) {
+					this.find(pivot.value).parent.right = pivot_next;
+				} else {
+					this.find(pivot.value).parent.left = pivot_next;
+				}
 				pivot_next.left = tmp;
 			}
 
@@ -100,11 +121,33 @@ function AVLtree () {
 			if ( pivot==this.head ) {
 				this.head = pivot_next;
 			} else {
-				this.find(pivot.value).parent.left = pivot_next;
+				if ( this.onParentRight(pivot) ) {
+					this.find(pivot.value).parent.right = pivot_next;
+				} else {
+					this.find(pivot.value).parent.left = pivot_next;
+				}
 			}
 		}
 	}
+	this.RL = function (pivot) {
+		let pivot_next = pivot.right;
+		let tmp = pivot_next.left;
 
+		pivot.right = tmp.left;
+		pivot_next.left = tmp.right;
+		tmp.right = pivot_next;
+		tmp.left = pivot;
+		// console.log('tmp',tmp.value)
+		if ( pivot==this.head ) {
+			this.head = tmp;
+		} else {
+			if ( this.onParentRight(pivot) ) {
+				this.find(pivot.value).parent.right = tmp;
+			} else {
+				this.find(pivot.value).parent.left = tmp;
+			}
+		}		
+	}
 
 	this.switchType = function () {
 		let flag;
@@ -119,22 +162,29 @@ function AVLtree () {
 		} else if ( this.balanceFactor( target ) < -1 ) {
 			flag = ( this.balanceFactor( target.right ) <= 0 )?3:4
 		}
-		// console.log( flag );
+		// console.log('flag is: ', flag );
 		return flag;
 	}
 	this.balanceTree = function () {
 		let node = this.findNodeNeedToBalance();
 		// console.log('nedd to balance',node.value)
+		if ( !node ) return;
+		// console.log('need to balance:' ,node.value)
 		switch ( this.switchType() ) {
 			//LL
 			case 1:
 				this.LL(node);
 				break;
+			//LR
 			case 2:
 				this.LR(node);
 				break;
 			//RR
 			case 3:
+				this.RR(node);
+				break;
+			//RL
+			case 4:
 				this.RR(node);
 				break;
 		}
@@ -144,6 +194,9 @@ function AVLtree () {
 	this.findNodeNeedToBalance = function (current=this.head,parent=this.head) {
 		// console.log('debug---> bf',this.balanceFactor(current))
 		// console.log('debug--->',current.value)
+		if ( this.balanceFactor(this.head) <= 1 && this.balanceFactor(this.head) >= -1) {
+			return false
+		}
 		while ( current ) {
 			if ( this.balanceFactor(current) < -1 ||
 				 this.balanceFactor(current) > 1 ) {
@@ -350,17 +403,10 @@ var b = new AVLtree();
 	// b.add(70);
 	b.add(20);
 	b.add(4);
-	b.add(26);
-	b.add(2);
-	b.add(3);
+	b.add(27);
+	b.add(24);
+	b.add(25);
 
 // }
-// b.traversal_inorder()
-// console.log(b.balanceFactor(b.find(20).current))
-// console.log(b)
-// console.log(b.findNodeNeedToBalance().value)
-// console.log(b.height(b.find(26).current))
-// b.traversal_inorder()
-// console.log(b.findParent(b.find(40).current))
-// console.log(b.find(40).parent)
+b.traversal_inorder()
 console.log(b.head)
