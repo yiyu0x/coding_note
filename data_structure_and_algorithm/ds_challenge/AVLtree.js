@@ -6,8 +6,48 @@ function AVLtree () {
 		this.left = null;
 		this.right = null;
 	}
-	
-	this.balanceTree = function () {
+	this.findParent = function (node,current=this.head) {
+		// console.log(node)
+		while ( current ) {
+			if ( current.left==node || current.right==node ) {
+				// console.log('great')
+				return current;
+			}
+
+			if ( current.right ) {
+				return this.find( current.right )
+			}
+
+			if ( current.left ) {
+				return this.find( current.right )
+			}
+
+			return
+		}
+	}
+
+	this.LL = function ( pivot ) {
+		// console.log(':',current.value)
+		let pivot_next = pivot.left;
+		let tmp = pivot_next.right;
+
+
+		pivot_next.right = pivot;
+		pivot.left = tmp;
+
+		if ( pivot==this.head ) {
+			this.head = pivot_next;
+		} else {
+			this.find(pivot.value).parent.left = pivot_next;
+			// console.log(this.find(pivot.value).parent.left)
+			// console.log(pivot_next)
+			console.log(this.head)
+		}
+		// current.left = current.left.left;
+		// current.right = tmp;
+		// console.log(current.value)
+	}
+	this.switchType = function () {
 		let flag;
 		// case table
 		// LL :1
@@ -15,21 +55,34 @@ function AVLtree () {
 		// RR :3
 		// RL :4
 		let target = this.findNodeNeedToBalance();
-		// console.log('tv',target.value)
 		if ( this.balanceFactor( target ) > 1 ) {
-			if ( this.balanceFactor( target.left ) > 0 ) flag = 1;
-			else if ( this.balanceFactor( target.left ) < 0 ) flag = 2;
+			flag = ( this.balanceFactor( target.left ) >= 0 )?1:2
 		} else if ( this.balanceFactor( target ) < -1 ) {
-			if ( this.balanceFactor( target.right ) < 0 ) flag = 3;
-			else if ( this.balanceFactor( target.right ) > 0 ) flag = 4;
+			flag = ( this.balanceFactor( target.right ) <= 0 )?3:4
 		}
-
-		console.log( flag );
+		// console.log( flag );
+		return flag;
+	}
+	this.balanceTree = function () {
+		let node = this.findNodeNeedToBalance();
+		console.log('nedd to balance',node.value)
+		switch ( this.switchType() ) {
+			//LL
+			case 1:
+				this.LL(node);
+				break;
+			case 2:
+				break;
+			case 3:
+				break;
+			case 4:
+				break;			
+		}
 
 	}
 
 	this.findNodeNeedToBalance = function (current=this.head,parent=this.head) {
-		console.log('debug---> bf',this.balanceFactor(current))
+		// console.log('debug---> bf',this.balanceFactor(current))
 		// console.log('debug--->',current.value)
 		while ( current ) {
 			if ( this.balanceFactor(current) < -1 || 
@@ -83,12 +136,14 @@ function AVLtree () {
 			if ( value <= current.value ) {
 				if ( !left ) {
 					current.left = node;
+					this.balanceTree()
 				} else {
 					this.add( value, left);
 				}
 			} else if ( value > current.value ) {
 				if ( !right ) {
 					current.right = node;
+					this.balanceTree()
 				} else {
 					this.add( value, right);
 				}
@@ -226,11 +281,13 @@ function AVLtree () {
 var b = new AVLtree();
 // for (let i=0;i<25;i++) {
 	// let ran = Math.floor( Math.random()*50 + 1 );
-	b.add(24);
-	b.add(27);
+	b.add(70);
+	b.add(50);
+	b.add(40);
+	b.add(60);
+	b.add(30);
+	b.add(45);
 	b.add(20);
-	b.add(1);
-	b.add(2);
 	// b.add(26);
 	// b.add(50);
 	// b.add(25);
@@ -243,4 +300,7 @@ var b = new AVLtree();
 // console.log(b)
 // console.log(b.findNodeNeedToBalance().value)
 // console.log(b.height(b.find(26).current))
-b.balanceTree()
+b.traversal_inorder()
+// console.log(b.findParent(b.find(40).current))
+// console.log(b.find(40).parent)
+// console.log(b.head)
