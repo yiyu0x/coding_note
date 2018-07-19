@@ -13,7 +13,6 @@ function AVLtree () {
 	this.findParent = function (node,current=this.head) {
 		while ( current ) {
 			if ( current.left==node || current.right==node ) {
-				// console.log('great')
 				return current;
 			}
 
@@ -49,7 +48,7 @@ function AVLtree () {
 			}
 
 		//complex type
-		} else {	
+		} else {
 
 			let pivot_next = pivot.right;
 			let tmp = pivot_next.left;
@@ -78,7 +77,7 @@ function AVLtree () {
 		pivot_next.right = tmp.left;
 		tmp.left = pivot_next;
 		tmp.right = pivot;
-		// console.log('tmp',tmp.value)
+
 		if ( pivot==this.head ) {
 			this.head = tmp;
 		} else {
@@ -87,7 +86,7 @@ function AVLtree () {
 			} else {
 				this.find(pivot.value).parent.left = tmp;
 			}
-		}		
+		}
 	}
 	this.RR = function (pivot) {
 		//siple type
@@ -137,7 +136,7 @@ function AVLtree () {
 		pivot_next.left = tmp.right;
 		tmp.right = pivot_next;
 		tmp.left = pivot;
-		// console.log('tmp',tmp.value)
+
 		if ( pivot==this.head ) {
 			this.head = tmp;
 		} else {
@@ -146,7 +145,7 @@ function AVLtree () {
 			} else {
 				this.find(pivot.value).parent.left = tmp;
 			}
-		}		
+		}
 	}
 
 	this.switchType = function () {
@@ -393,20 +392,11 @@ function AVLtree () {
 var b = new AVLtree();
 // for (let i=0;i<25;i++) {
 	// let ran = Math.floor( Math.random()*50 + 1 );
-	// b.add(70);
-	// b.add(50);
-	// b.add(40);
-	// b.add(60);
-	// b.add(30);
-	// b.add(45);
-	// b.add(20);
-	// b.add(70);
 	b.add(20);
 	b.add(4);
 	b.add(27);
 	b.add(24);
 	b.add(25);
-
 // }
 b.traversal_inorder()
 console.log(b.head)
