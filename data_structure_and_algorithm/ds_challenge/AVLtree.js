@@ -1,5 +1,5 @@
 function AVLtree () {
-	
+
 	this.head = null;
 	const Node = function (value) {
 		this.value = value;
@@ -7,7 +7,6 @@ function AVLtree () {
 		this.right = null;
 	}
 	this.findParent = function (node,current=this.head) {
-		// console.log(node)
 		while ( current ) {
 			if ( current.left==node || current.right==node ) {
 				// console.log('great')
@@ -27,26 +26,71 @@ function AVLtree () {
 	}
 
 	this.LL = function ( pivot ) {
-		// console.log(':',current.value)
-		let pivot_next = pivot.left;
-		let tmp = pivot_next.right;
+		//siple type
+		if ( !pivot.right ) {
+			let tmp = new Node(pivot.value);
+			tmp.left = null;
+			let pivot_next = pivot.left;
+			//connect
+			if ( pivot==this.head ) {
+				this.head = pivot_next;
+				pivot_next.right = tmp;
+			} else {
+				this.find(pivot.value).parent.left = pivot_next;
+				pivot_next.right = tmp;
+			}
+
+		//complex type
+		} else {	
+
+			let pivot_next = pivot.right;
+			let tmp = pivot_next.left;
 
 
-		pivot_next.right = pivot;
-		pivot.left = tmp;
+			pivot_next.left = pivot;
+			pivot.right = tmp;
 
-		if ( pivot==this.head ) {
-			this.head = pivot_next;
-		} else {
-			this.find(pivot.value).parent.left = pivot_next;
-			// console.log(this.find(pivot.value).parent.left)
-			// console.log(pivot_next)
-			console.log(this.head)
+			if ( pivot==this.head ) {
+				this.head = pivot_next;
+			} else {
+				this.find(pivot.value).parent.right = pivot_next;
+			}
 		}
-		// current.left = current.left.left;
-		// current.right = tmp;
-		// console.log(current.value)
 	}
+	this.RR = function ( pivot) {
+		//siple type
+		if ( !pivot.left ) {
+			let tmp = new Node(pivot.value);
+			tmp.right = null;
+			let pivot_next = pivot.right;
+			//connect
+			if ( pivot==this.head ) {
+				this.head = pivot_next;
+				pivot_next.left = tmp;
+			} else {
+				this.find(pivot.value).parent.right = pivot_next;
+				pivot_next.left = tmp;
+			}
+
+		//complex type
+		} else {
+
+			let pivot_next = pivot.left;
+			let tmp = pivot_next.right;
+
+			pivot_next.right = pivot;
+			pivot.left = tmp;
+
+			//connect
+			if ( pivot==this.head ) {
+				this.head = pivot_next;
+			} else {
+				this.find(pivot.value).parent.left = pivot_next;
+			}
+		}
+	}
+
+
 	this.switchType = function () {
 		let flag;
 		// case table
@@ -65,7 +109,7 @@ function AVLtree () {
 	}
 	this.balanceTree = function () {
 		let node = this.findNodeNeedToBalance();
-		console.log('nedd to balance',node.value)
+		// console.log('nedd to balance',node.value)
 		switch ( this.switchType() ) {
 			//LL
 			case 1:
@@ -73,10 +117,10 @@ function AVLtree () {
 				break;
 			case 2:
 				break;
+			//RR
 			case 3:
+				this.RR(node);
 				break;
-			case 4:
-				break;			
 		}
 
 	}
@@ -85,7 +129,7 @@ function AVLtree () {
 		// console.log('debug---> bf',this.balanceFactor(current))
 		// console.log('debug--->',current.value)
 		while ( current ) {
-			if ( this.balanceFactor(current) < -1 || 
+			if ( this.balanceFactor(current) < -1 ||
 				 this.balanceFactor(current) > 1 ) {
 				//if bf greater then 1 , left tree is deeper than right tree
 				//so must adjust left tree
@@ -116,7 +160,7 @@ function AVLtree () {
 			if ( !current.left && !current.right ) {
             	return 1;
             } else {
-            	return 1 + ( this.height(current.left) > this.height(current.right) ? 
+            	return 1 + ( this.height(current.left) > this.height(current.right) ?
             				this.height(current.left) : this.height(current.right));
             }
 		}
@@ -154,7 +198,7 @@ function AVLtree () {
 	this.find = function (value ,current=this.head, parent=null) {
 
 		while ( current ) {
-			
+
 			if ( current.value==value ) {
 				return {current,parent};
 			}
@@ -172,15 +216,15 @@ function AVLtree () {
 
 		if ( !head.left && !head.right ) {
 			head = null;
-		}	
-		//only have left leaf 
+		}
+		//only have left leaf
 		else if ( head.left && !head.right ) {
 			head = head.left;
 		}
 		//only have right leaf
 		else if ( !head.left && head.right ) {
 			head = head.right;
-		}	
+		}
 		//have two leafs
 		else if ( head.left && head.right ) {
 			this.adjust(head, head.left);
@@ -221,8 +265,8 @@ function AVLtree () {
 				} else {
 					parent.left = null;
 				}
-			}	
-			//only have left leaf 
+			}
+			//only have left leaf
 			else if ( target.left && !target.right ) {
 				if ( leafOnRight ) {
 					parent.right = target.left;
@@ -245,7 +289,7 @@ function AVLtree () {
 					target.value = target.left.value;
 					target.left = null;
 				} else {
-					this.adjust(target.left,target.left)				
+					this.adjust(target.left,target.left)
 				}
 			}
 		}
@@ -256,7 +300,7 @@ function AVLtree () {
 			this.traversal_inorder(current.left)
 			console.log(current.value);
 			this.traversal_inorder(current.right)
-		} 
+		}
 	}
 
 	this.traversal_preorder = function (current=this.head) {
@@ -264,7 +308,7 @@ function AVLtree () {
 			console.log(current.value);
 			this.traversal_inorder(current.left)
 			this.traversal_inorder(current.right)
-		} 
+		}
 	}
 
 	this.traversal_postorder = function (current=this.head) {
@@ -272,27 +316,25 @@ function AVLtree () {
 			this.traversal_inorder(current.left)
 			this.traversal_inorder(current.right)
 			console.log(current.value);
-		} 
+		}
 	}
 
 
- 
+
 }
 var b = new AVLtree();
 // for (let i=0;i<25;i++) {
 	// let ran = Math.floor( Math.random()*50 + 1 );
-	b.add(70);
-	b.add(50);
-	b.add(40);
-	b.add(60);
-	b.add(30);
-	b.add(45);
-	b.add(20);
-	// b.add(26);
+	// b.add(70);
 	// b.add(50);
-	// b.add(25);
-	// b.add(ran);
-	// b.delete(25)
+	// b.add(40);
+	// b.add(60);
+	// b.add(30);
+	// b.add(45);
+	// b.add(20);
+	b.add(3);
+	b.add(2);
+	b.add(1);
 
 // }
 // b.traversal_inorder()
@@ -303,4 +345,4 @@ var b = new AVLtree();
 b.traversal_inorder()
 // console.log(b.findParent(b.find(40).current))
 // console.log(b.find(40).parent)
-// console.log(b.head)
+console.log(b.head)
