@@ -17,7 +17,6 @@ function RBT () {
 				if ( this.findParent(target, current.left) ) { 
 					return this.findParent(target, current.left);
 				}
-				
 			}
 
 			if ( current.right ) {
@@ -30,6 +29,24 @@ function RBT () {
 			return false;
 		}
 
+	}
+	this.LL = function (current,father,uncle) {
+		let pivot = this.findParent(father.value);
+		let pivot_next = pivot.left;
+		let tmp = pivot_next.right;
+		pivot_next.right = pivot;
+		pivot.left = tmp;
+		pivot.color = 'red';
+		pivot_next.color = 'black';
+		//connect
+		if ( pivot==this.head ) {
+			this.head = pivot_next;
+		} else {
+			let pivotParent = this.findParent(pivot.value);
+			if ( pivotParent.left==pivot ) {
+				pivotParent.left = pivot_next;
+			}
+		}
 	}
 	this.RR = function (current,father,uncle) {
 		let pivot = this.findParent(father.value);
@@ -48,10 +65,26 @@ function RBT () {
 				pivotParent.left = pivot_next;
 			}
 		}
-
-
-
 	}
+	this.LR = function (current,father,uncle) {
+		// rotate to LL
+		let pivot = this.findParent(father.value);
+		pivot.left = current;
+		current.left = father;
+		father.right = null;
+		// do LL
+		this.LL(father,current,uncle);
+	}
+	this.RL = function (current,father,uncle) {
+		// rotate to RR
+		let pivot = this.findParent(father.value);
+		pivot.right = current;
+		current.right = father;
+		father.left = null;
+		// do RR
+		this.RR(father,current,uncle);
+	}	
+
 	this.findType = function (current,father,uncle) {
 		if ( father.value <= uncle.value && current.value <= father.value ) return 1;
 		if ( father.value > uncle.value && current.value > father.value ) return 2;
@@ -62,7 +95,7 @@ function RBT () {
 		switch ( this.findType(current,father,uncle) ) {
 			//LL
 			case 1:
-				this.LL();
+				this.LL(current,father,uncle);
 				console.log(1)
 				break;
 			//RR
@@ -165,8 +198,7 @@ r.insert(new Node(9));
 r.insert(new Node(81));
 r.insert(new Node(82));
 // console.log(r.head);
-console.log(r.head);
-
 console.log();
+console.log(r.head);
 console.log()
 // console.log(r.head.left.left);
