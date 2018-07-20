@@ -1,4 +1,5 @@
 //ref:https://www.qiujiawei.com/redblacktree-2/
+//this code not working ( just practice how to implement )
 const Node = function (value) {
 	this.value = value;
 	this.color = 'red';
@@ -117,7 +118,9 @@ function RBT () {
 			
 	}
 	this.recolor = function (current) {
-		// console.log(current.value)
+		if ( current.value==13 ) {
+			console.log(current.value)
+		}
 		let father = this.findParent(current.value);
 		// console.log(father.value)
 		let grandfather = this.findParent( this.findParent(current.value).value );
@@ -133,17 +136,20 @@ function RBT () {
 		//in this function , father's color already knew as red .
 		let flag = 1;
 		// console.log(father.value)
-		while ( father!=this.head) {
+		while ( father!=this.head && father.color=='red' ) {
 			
 			// let father = this.findParent(current.value);
 			// let grandfather = this.findParent( this.findParent(current.value).value );
 			// console.log(uncle.value)
 			if ( uncle && uncle.color == 'black' ) {
-				// cnosole.log('xx')
+				console.log('bb')
 				this.rotate(current,father,uncle);
 				return
 			}else if ( uncle && uncle.color == 'red') {
+				console.log('rr')
 				uncle.color = 'black';
+				if ( this.findParent( father.value )!=this.head )
+					this.findParent( father.value ).color = 'red';
 			}
 
 			//coloring
@@ -153,6 +159,9 @@ function RBT () {
 			} else {
 				father.color = 'red';
 			}
+			console.log(current.color)
+			console.log(father.color)
+			console.log(uncle.color)
 			//iterative
 			father = this.findParent( father.value );
 			if ( grandfather.left && grandfather.right ) {
@@ -169,7 +178,7 @@ function RBT () {
 			this.head.color = 'black';
 			return;
 		}
-
+		// console.log(node.value)
 		if ( current ) {
 			if ( !current.left && node.value <= current.value ) {
 				current.left = node;
@@ -190,13 +199,16 @@ function RBT () {
 }
 
 var r = new RBT();
-r.insert(new Node(80));
-r.insert(new Node(40));
-r.insert(new Node(20));
-r.insert(new Node(10));
-r.insert(new Node(9));
-r.insert(new Node(81));
-r.insert(new Node(82));
+r.insert(new Node(23));
+r.insert(new Node(16));
+r.insert(new Node(29));
+r.insert(new Node(12));
+r.insert(new Node(18));
+r.insert(new Node(26));
+r.insert(new Node(32));
+r.insert(new Node(13));
+// r.insert(new Node(30));
+// r.insert(new Node(49));
 // console.log(r.head);
 console.log();
 console.log(r.head);
