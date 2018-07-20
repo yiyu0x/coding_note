@@ -31,6 +31,27 @@ function RBT () {
 		}
 
 	}
+	this.RR = function (current,father,uncle) {
+		let pivot = this.findParent(father.value);
+		let pivot_next = pivot.right;
+		let tmp = pivot_next.left;
+		pivot_next.left = pivot;
+		pivot.right = tmp;
+		pivot.color = 'red';
+		pivot_next.color = 'black';
+		//connect
+		if ( pivot==this.head ) {
+			this.head = pivot_next;
+		} else {
+			let pivotParent = this.findParent(pivot.value);
+			if ( pivotParent.left==pivot ) {
+				pivotParent.left = pivot_next;
+			}
+		}
+
+
+
+	}
 	this.findType = function (current,father,uncle) {
 		if ( father.value <= uncle.value && current.value <= father.value ) return 1;
 		if ( father.value > uncle.value && current.value > father.value ) return 2;
@@ -46,7 +67,7 @@ function RBT () {
 				break;
 			//RR
 			case 2:
-				this.RR();
+				this.RR(current,father,uncle);
 				console.log(2)
 				break;
 			case 3:
@@ -72,25 +93,28 @@ function RBT () {
 		if ( grandfather.left && grandfather.right ) {
 			uncle = (grandfather.left==father) ? grandfather.right:grandfather.left;
 		}
-		// console.log(uncle.value)
-		if (grandfather==this.head ) {
+		if ( grandfather==this.head && !uncle ) {
 			father.color = 'black';
 			return;
 		}
 		//in this function , father's color already knew as red .
 		let flag = 1;
+		// console.log(father.value)
 		while ( father!=this.head) {
-			flag++;
+			
 			// let father = this.findParent(current.value);
 			// let grandfather = this.findParent( this.findParent(current.value).value );
-			
+			// console.log(uncle.value)
 			if ( uncle && uncle.color == 'black' ) {
+				// cnosole.log('xx')
 				this.rotate(current,father,uncle);
 				return
 			}else if ( uncle && uncle.color == 'red') {
 				uncle.color = 'black';
 			}
+
 			//coloring
+			flag++;
 			if ( flag%2==0 ) {
 				father.color = 'black';
 			} else {
@@ -139,9 +163,10 @@ r.insert(new Node(20));
 r.insert(new Node(10));
 r.insert(new Node(9));
 r.insert(new Node(81));
+r.insert(new Node(82));
 // console.log(r.head);
 console.log(r.head);
 
 console.log();
 console.log()
-console.log(r.head.left.left);
+// console.log(r.head.left.left);
