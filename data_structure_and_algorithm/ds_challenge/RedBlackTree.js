@@ -138,6 +138,7 @@ r.insert(new Node(40));
 r.insert(new Node(20));
 r.insert(new Node(10));
 r.insert(new Node(9));
+r.insert(new Node(81));
 // console.log(r.head);
 console.log(r.head);
 
