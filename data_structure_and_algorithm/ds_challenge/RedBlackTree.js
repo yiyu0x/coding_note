@@ -8,6 +8,20 @@ function RBT () {
 
 	this.head = null;
 
+	this.findParent = function (target,current=this.head) {
+
+		if ( current ) {
+			if ( current.left==target ) return current;
+			else if ( current.right==target ) return current;
+			return this.findParent(target, current.left);
+			return this.findParent(target, current.right);
+		}
+
+	}
+
+	this.recolor = function (current) {
+		this.findParent(current);
+	}
 
 	this.insert = function (node,current=this.head) {
 		
@@ -39,4 +53,5 @@ r.insert(new Node(20));
 r.insert(new Node(22));
 r.insert(new Node(26));
 r.insert(new Node(15));
-console.log(r.head);
+// console.log(r.head);
+conosle.log(r.findParent(26));
