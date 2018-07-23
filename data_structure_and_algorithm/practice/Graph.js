@@ -1,4 +1,5 @@
 //implement with array
+//this graph is Undirected graph
 function Graph () {
 	this.vertexs = [];
 	this.edges = [];
@@ -8,8 +9,11 @@ function Graph () {
 		this.edges[value] = [];
 	}
 	this.addEdge = function (v1,v2) {
+		//Undirected graph
 		this.edges[v1].push(v2);
 		this.edges[v2].push(v1);
+		//directed graph
+		// this.edges[v1].push(v2);
 	}
 
 	this.DFS = function (vertex,visited=[]) {
@@ -23,10 +27,28 @@ function Graph () {
 				}
 			}
 		} else {
-			console.log('start vertexs not in graph')
+			console.log('vertexs not in graph')
 		}
-
 	}
+
+	this.BFS = function (vertex,queue=[vertex],visited=[]) {
+		visited[vertex] = true;
+		if ( this.vertexs.indexOf(vertex)!=-1 ) {
+			for (let i=0;i<this.edges[vertex].length;i++) {
+				let target = this.edges[vertex][i];
+				if ( !visited[target] ) {
+					queue.push(target)
+					visited[target] = true;
+				}
+			}
+			if ( queue.length > 0 ) {
+				console.log(queue[0])
+				this.BFS(queue.shift(),queue,visited)
+			}
+		} else {
+			return
+		}
+	}	
 }
 
 var g = new Graph();
@@ -53,4 +75,4 @@ g.addEdge("H","E");
 g.addEdge("E","I");
 g.addEdge("E","J");
 g.addEdge("F","K");
-g.DFS("A")
+g.BFS("A")
