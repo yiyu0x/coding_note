@@ -1,5 +1,5 @@
 //ref:https://www.qiujiawei.com/redblacktree-2/
-//this code not working ( just practice how to implement )
+//this code not working ( just practice how to implement and fail.)
 const Node = function (value) {
 	this.value = value;
 	this.color = 'red';
