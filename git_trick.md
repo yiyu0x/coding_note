@@ -13,3 +13,11 @@ git reset --hard `commit id`
 ## push old commit to server
 
 git push --force
+
+## untrack file
+
+git rm -r --cached <file>
+  
+## git ls tracked file
+
+git ls-files -v
