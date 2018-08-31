@@ -2,6 +2,8 @@
 
 以下配置，讓sublime text3也能像vscode一樣在terminal中使用自如。
 
+*方法1*
+
 1. 確定sublime text3是否安裝完畢
 
 > file /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl /usr/local/bin/sublime
@@ -18,3 +20,8 @@ output : /Applications/Sublime Text.app/Contents/SharedSupport/bin/subl: Mach-O 
 以後就可以直接在project裡面用`subl .`來將專案用sublime text3開啟
 
 如果不喜歡subl這個名字，可以在步驟2自己設定link的名稱
+
+*方法2*
+
+配置`~/.zshrc`或是`.bash_profile`
+> alias subl='open -a "Sublime Text"'
