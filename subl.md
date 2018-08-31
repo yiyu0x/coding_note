@@ -5,6 +5,7 @@
 1. 確定sublime text3是否安裝完畢
 
 > file /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl /usr/local/bin/sublime
+
 output : /Applications/Sublime Text.app/Contents/SharedSupport/bin/subl: Mach-O 64-bit executable x86_64
 如果這一步找不到就代表安裝沒有完成，請不要往下做
 
