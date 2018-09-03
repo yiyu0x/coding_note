@@ -1,13 +1,13 @@
 紀錄一些管理主機以來學到的事情
 
-## nginx
+# nginx
 
 強大的access log圖像化分析套件，goaccess
 
 > goaccess -f `<access.log>`
 
 
-## ssh
+# ssh
 
 找出誰在暴力測試ssh登入
 > grep sshd.\*Failed /var/log/auth.log | less
@@ -15,7 +15,7 @@
 找出誰ssh連線失敗(通常是ssh key錯誤)
 > grep sshd.*Did /var/log/auth.log | less
 
-### fail2ban
+## fail2ban
 
 安裝完之後，先看目前規則是否多出fail2ban
 > iptables --list
@@ -68,9 +68,9 @@ ssh對應的port從`/etc/services`這個檔案對應
 查看狀態
 > sudo ufw status
 
-## mysql/mariadb
+# mysql/mariadb
 
-### 設定root密碼
+## 設定root密碼
 
 > sudo mysql -uroot
 
@@ -78,23 +78,23 @@ ssh對應的port從`/etc/services`這個檔案對應
   
 > FLUSH PRIVILEGES;
 
-### 建立使用者
+## 建立使用者
 
 `CREATE USER 'my_user'@'localhost' IDENTIFIED BY 'my_password';`
 
 [mysql常用手段](https://blog.gtwang.org/linux/mysql-create-database-add-user-table-tutorial/)
 
-### 檢視db中所有user
+## 檢視db中所有user
 
 > select User, Host from mysql.user; 
 
 
 
-## 帳戶管理
+# 帳戶管理
 
-### 刪除某個用戶全部process
+## 刪除某個用戶全部process
 > killall -u <username>
   
-### 刪除某個用戶全部資料
+## 刪除某個用戶全部資料
 > userdel -r guest
 
