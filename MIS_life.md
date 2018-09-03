@@ -31,9 +31,23 @@ RETURN     all  --  anywhere             anywhere
 若要將封鎖規則刪除
 > sudo iptables -D f2b-sshd 1
 
+## mysql/mariadb
 
-## 刪除某個用戶全部process
+設定root密碼
+
+> sudo mysql -uroot
+
+> GRANT ALL PRIVILEGES on *.* to 'root'@'localhost' IDENTIFIED BY '<password>';
+  
+> FLUSH PRIVILEGES;
+
+
+
+## 帳戶管理
+
+### 刪除某個用戶全部process
 > killall -u <username>
   
-## 刪除某個用戶全部資料
+### 刪除某個用戶全部資料
 > userdel -r guest
+
