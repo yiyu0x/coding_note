@@ -45,6 +45,8 @@ RETURN     all  --  anywhere             anywhere
 
 `CREATE USER 'my_user'@'localhost' IDENTIFIED BY 'my_password';`
 
+[mysql常用手段](https://blog.gtwang.org/linux/mysql-create-database-add-user-table-tutorial/)
+
 ### 檢視db中所有user
 
 > select User, Host from mysql.user; 
