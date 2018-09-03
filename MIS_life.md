@@ -31,6 +31,43 @@ RETURN     all  --  anywhere             anywhere
 若要將封鎖規則刪除
 > sudo iptables -D f2b-sshd 1
 
+# ufw
+
+
+開啟關閉
+> sudo ufw enable
+> sudo ufw disable
+
+決定使用白名單或黑名單
+
+全部打開,要設防火牆設關閉的規則
+> sudo ufw default allow
+
+全部關閉,要設防火牆設開啟的規則(個人用這個)
+> sudo ufw default deny
+
+允許某個服務(相反用 deny)
+> sudo ufw allow ssh
+
+ssh對應的port從`/etc/services`這個檔案對應
+
+允許某的port(相反用 deny)
+> sudo ufw allow in 22
+
+刪除規則
+
+` sudo ufw delete <number>`
+
+查看規則number
+> sudo ufw status numbered
+
+開啟log
+> sudo ufw logging on
+存在`/var/log/ufw.log`
+
+查看狀態
+> sudo ufw status
+
 ## mysql/mariadb
 
 ### 設定root密碼
