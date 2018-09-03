@@ -18,7 +18,7 @@
 ## fail2ban
 
 安裝完之後，先看目前規則是否多出fail2ban
-> iptables --list
+> iptables -L
 
 如果有封鎖來源會多出規則
 ```
