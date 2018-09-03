@@ -33,13 +33,21 @@ RETURN     all  --  anywhere             anywhere
 
 ## mysql/mariadb
 
-設定root密碼
+### 設定root密碼
 
 > sudo mysql -uroot
 
 `GRANT ALL PRIVILEGES on *.* to 'root'@'localhost' IDENTIFIED BY '<password>'`
   
 > FLUSH PRIVILEGES;
+
+### 建立使用者
+
+`CREATE USER 'my_user'@'localhost' IDENTIFIED BY 'my_password';`
+
+### 檢視db中所有user
+
+> select User, Host from mysql.user; 
 
 
 
