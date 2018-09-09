@@ -36,7 +36,10 @@ out:`hello,python is pretty`
 
 ## round
 
-round函數有先天漏洞，四捨五入實際上是取接近偶數的整數
+round函數有地雷，四捨五入實際上是取接近偶數的整數
+在python3.5以下則又是不同的結果
+
+以下為python3.5之後版本
 
 例如:
 
