@@ -53,7 +53,7 @@ running on 13.04+, update the file: /etc/gnome/defaults.list.
 
 `sudo sed -i 's/gedit.desktop/sublime_text.desktop/g' /etc/gnome/defaults.list`
 
-## rename the dicectory in Home to Engliash
+## rename the dicectory in Home to English
 
 ### method 1 (recommend)
 
@@ -61,7 +61,7 @@ check $LANG now :
 
 `echo $LANG`
 
-cheange to English :
+change to English :
 
 `export LANG=en_US`
 
