@@ -38,3 +38,6 @@ mysql相依性問題，造成apt無法繼續使用
 
 查看相關套件
 > dpkg -l | grep mysql
+
+
+autoclean , clean , autoremove 差異 --> [ref](https://blog.csdn.net/flydream0/article/details/8620396)
