@@ -10,6 +10,7 @@ ubuntu server更改hostname
 
 如果還是無效
 
+(server版要加上這行)
 將 `/etc/cloud/cloud.cfg` 的 `preserve_hostname` 設定 改為 `true`
 
 再重開機
