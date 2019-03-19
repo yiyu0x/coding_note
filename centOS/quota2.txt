@@ -1,0 +1,38 @@
+新增一個硬碟（200MB），並將空間掛載為DISK2
+> 從 vb 新增
+> fdisk /etc/sdb 
+> blkid
+> 設定 /etc/fstab 
+UUID=f6229601-6fae-4033-9e84-ee0815c9d725 /DISK2  xfs   defaults,usrquota,grpquota        0 0
+> mkdir /DISK2
+> mount /DISK2
+新增群組: mis
+> groupadd mis
+新增使用者: eric、joyce 、hank，使用者的家目錄最多只能放到15MB資料，超過12MB警告。
+> useradd -G mis eric
+> useradd -G mis joyce
+> useradd -G mis hank
+> setquota -u eric 12000 15000 0 0 /DISK2
+> setquota -u joyce 12000 15000 0 0 /DISK2
+> setquota -u hank 12000 15000 0 0 /DISK2
+建立一個目錄 /DISK2/mis ，此目錄為三個使用者的共享目錄，最大80MB，超過70MB警告，並建立家目錄到此目錄的連結。
+> mkdir /DISK2/mis
+> rm -rf /home/eric /home/joyce /home/hank
+> ln -s /DISK2/mis /home/eric
+> ln -s /DISK2/mis /home/joyce
+> ln -s /DISK2/mis /home/hank
+> xfs_quota-x -c "limit -g bsoft=70M bhard=80M mis" /DISK2
+-------------
+測試
+> su eric
+> cd ~
+> dd if=/dev/zero of=testfile bs=1M count=15
+
+> su joyce
+> cd ~
+> dd if=/dev/zero of=testfile bs=1M count=15
+
+> su hank
+> cd ~
+> dd if=/dev/zero of=testfile bs=1M count=15
+-------------

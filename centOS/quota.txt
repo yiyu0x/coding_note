@@ -1,0 +1,116 @@
+1.Quota啟用設定：相關設定檔 /etc/fstab
+設定 /etc/fstab 加上(UUID可以用 blkid指令查看)
+UUID=f8578a52-a5e3-4bf1-bdfe-762b0a4bd43c /home xfs     defaults,usrquota,grpquota 1 2
+
+2.新增帳號：相關指令 useradd,groupadd
+groupadd g1
+groupadd g2
+groupadd g3
+ 
+3.4.5 (粗體字為在該使用者家目錄下使用)
+useradd -g g1 user1
+setquota -u user1 3000 5000 0 0 /home
+su user1
+dd if=/dev/zero of=testfile bs=1M count=5
+exit
+
+useradd -g g1 user2
+setquota -u user2 20000 25000 7 10 /home
+su user2
+touch {1..10}
+
+useradd -g g1 user3
+setquota -u user3 12000 15000 0 0 /home
+su user3
+dd if=/dev/zero of=testfile bs=1M count=15
+exit
+
+//設定群組(g2)的磁碟配額,最大30MB,超過25MB警告
+xfs_quota -x -c "limit -g bsoft=25M bhard=30M g2" /home
+
+ 
+useradd -g g2 user4
+(使用user4測試群組配額)
+su user4
+dd if=/dev/zero of=testfile bs=1M count=30
+exit
+
+useradd -g g2 user5
+setquota -u user5 25000 30000 0 0 /home
+su user5
+dd if=/dev/zero of=testfile bs=1M count=15
+exit
+ 
+useradd -g g2 user6
+setquota -u user6 20000 25000 7 10 /home
+su user6
+dd if=/dev/zero of=testfile bs=1M count=25
+touch {1..10}
+exit
+
+//設定群組(g3)的磁碟配額,最大50MB,超過48MB警告
+xfs_quota -x -c "limit -g bsoft=48M bhard=50M g3" /home
+
+ 
+
+useradd -g g3 user7
+(使用user7測試群組配額)
+su user7
+dd if=/dev/zero of=testfile bs=1M count=50
+exit
+
+setquota -u user7 48000 50000 0 0 /home
+su user7
+dd if=/dev/zero of=testfile bs=1M count=50
+exit
+
+useradd -g g3 user8
+setquota -u user8 45000 50000 0 0 /home
+su user8
+dd if=/dev/zero of=testfile bs=1M count=50
+exit
+
+useradd -g g3 user9
+setquota -u user9 20000 25000 7 10 /home
+su user9
+dd if=/dev/zero of=testfile bs=1M count=25
+touch {1..10}
+exit
+
+6.
+> xfs_quota -xc 'report -h' /home
+
+User ID      Used   Soft   Hard Warn/Grace
+---------- ---------------------------------
+root           8K      0      0  00 [------]
+user1        4.5M   2.9M   4.9M  00 [6 days]
+user2         12K  19.5M  24.4M  00 [------]
+user3       14.1M  11.7M  14.6M  00 [6 days]
+user4       25.0M      0      0  00 [------]
+user5         12K  24.4M  29.3M  00 [------]
+user6         12K  19.5M  24.4M  00 [------]
+user7       48.0M  46.9M  48.8M  00 [6 days]
+user8        1.0M  43.9M  48.8M  00 [------]
+user9         12K  19.5M  24.4M  00 [------]
+
+Group quota on /home (/dev/sdb)
+                        Blocks
+Group ID     Used   Soft   Hard Warn/Grace
+---------- ---------------------------------
+root           8K      0      0  00 [------]
+user2         12K      0      0  00 [------]
+g2          25.0M    25M    30M  00 [6 days]
+g3          49.0M    48M    50M  00 [6 days]
+user1        4.5M      0      0  00 [------]
+user3       14.1M      0      0  00 [------]
+
+> quota -u user2 user6 user9
+Disk quotas for user user2 (uid 1003):
+     Filesystem  blocks   quota   limit   grace   files   quota   limit   grace
+       /dev/sdb      12   20000   25000              10*      7      10   6days
+Disk quotas for user user6 (uid 1008):
+     Filesystem  blocks   quota   limit   grace   files   quota   limit   grace
+       /dev/sdb      12   20000   25000               4       7      10
+Disk quotas for user user9 (uid 1011):
+     Filesystem  blocks   quota   limit   grace   files   quota   limit   grace
+       /dev/sdb      12   20000   25000              10*      7      10   6days
